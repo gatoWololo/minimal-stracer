@@ -363,7 +363,7 @@ int check(char* name, int retval){
   return retval;
 }
 
-int main(){
+int main(int argc, char *argv[]){
 
   pid_t childPid = check("fork", fork());
   if(childPid == 0){
@@ -372,8 +372,7 @@ int main(){
 
     // Wait for parent
     check("raise", raise(SIGSTOP) );
-    char* argv[] = {"./forkBug", NULL};
-    check("execvp", execvp(argv[0], argv) );
+    check("execvp", execvp(argv[1], &argv[1]) );
   }else{
 
     unordered_map<pid_t, bool> prehook_status;
